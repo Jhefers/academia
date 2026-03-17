@@ -184,6 +184,15 @@ body::before {
 .rank-saldo-pos { color: #7fffb0; font-weight: 700; }
 .rank-saldo-neg { color: #ff7070; font-weight: 700; }
 
+.ranking-total {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 0.3rem;
+    padding-top: 0.7rem;
+    border-bottom: none;
+    font-weight: 700;
+    color: #dbd0ff;
+}
+
 .chart-container {
     height: 200px;
     width: 100%;

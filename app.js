@@ -227,6 +227,15 @@
 
         // ranking ordenado por presenças
         const ranking = Array.from(presenceMap.entries()).sort((a, b) => b[1] - a[1]);
+
+        // totais
+        const totPresencas = ranking.reduce((acc, [name]) => acc + (presenceMap.get(name) || 0), 0);
+        const totPago      = ranking.reduce((acc, [name]) => acc + (pagarMap.get(name)    || 0), 0);
+        const totGanho     = ranking.reduce((acc, [name]) => acc + (receberMap.get(name)  || 0), 0);
+        const totSaldo     = totGanho - totPago;
+        const totSaldoClass = totSaldo >= 0 ? 'rank-saldo-pos' : 'rank-saldo-neg';
+        const totSaldoSinal = totSaldo >= 0 ? '+' : '';
+
         rankingList.innerHTML = `
             <li class="ranking-item ranking-header">
                 <span class="rc-pos"></span>
@@ -251,6 +260,14 @@
                     <span class="rc-num ${saldoClass}">${saldoSinal}R$&nbsp;${saldo.toFixed(2)}</span>
                 </li>`;
             }).join('')}
+            <li class="ranking-item ranking-total">
+                <span class="rc-pos"></span>
+                <span class="rc-name">Total</span>
+                <span class="rc-num">${totPresencas}</span>
+                <span class="rc-num rank-debito">R$&nbsp;${totPago.toFixed(2)}</span>
+                <span class="rc-num rank-credito">R$&nbsp;${totGanho.toFixed(2)}</span>
+                <span class="rc-num ${totSaldoClass}">${totSaldoSinal}R$&nbsp;${totSaldo.toFixed(2)}</span>
+            </li>
         `;
 
         // cards

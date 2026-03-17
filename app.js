@@ -135,6 +135,10 @@
     const statsCards      = document.getElementById('stats-cards');
     const totalFundSpan   = document.getElementById('totalFund');
 
+    let attendanceChartInstance = null;
+    let radarPresencesInstance = null;
+    let radarAbsencesInstance = null;
+
     allParticipants.forEach(name => {
         const opt = document.createElement('option');
         opt.value = name;
@@ -193,11 +197,22 @@
     };
 
     // ---------- Estatísticas e ranking ----------
-    function computeStats() {
+    function getScopedWeeks(filterValue = 'all') {
+        return weeksData.map(week => {
+            if (filterValue === 'all') return week;
+            return {
+                ...week,
+                participants: week.participants.filter(p => p.name === filterValue)
+            };
+        });
+    }
+
+    function computeStats(filterValue = 'all') {
+        const scopedWeeks = getScopedWeeks(filterValue);
         let totalPresenceSum = 0;
         const presenceMap = new Map();
 
-        weeksData.forEach(week => {
+        scopedWeeks.forEach(week => {
             week.participants.forEach(p => {
                 const presCount = p.presences.filter(v => v === 1).length;
                 totalPresenceSum += presCount;
@@ -208,7 +223,7 @@
         // acumular pagar/receber por participante
         const pagarMap   = new Map();
         const receberMap = new Map();
-        weeksData.forEach(week => {
+        scopedWeeks.forEach(week => {
             week.participants.forEach(p => {
                 pagarMap.set(p.name,   (pagarMap.get(p.name)   || 0) + p.pagar);
                 receberMap.set(p.name, (receberMap.get(p.name) || 0) + p.receber);
@@ -261,16 +276,17 @@
         `;
 
         // cards
-        const mediaPresencas = (totalPresenceSum / allParticipants.length).toFixed(1);
+        const participantCount = Math.max(ranking.length, 1);
+        const mediaPresencas = (totalPresenceSum / participantCount).toFixed(1);
         statsCards.innerHTML = `
-            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-info"><h3>${allParticipants.length}</h3><span>participantes</span></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-info"><h3>${ranking.length}</h3><span>participantes</span></div></div>
             <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div><div class="stat-info"><h3>${totalPresenceSum}</h3><span>presenças totais</span></div></div>
             <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div><div class="stat-info"><h3>${mediaPresencas}</h3><span>média/pessoa</span></div></div>
         `;
 
         // fundo total (arrecadado - distribuído)
         let totalPagar = 0, totalReceber = 0;
-        weeksData.forEach(w => w.participants.forEach(p => {
+        scopedWeeks.forEach(w => w.participants.forEach(p => {
             totalPagar  += p.pagar;
             totalReceber += p.receber;
         }));
@@ -278,16 +294,19 @@
     }
 
     // ---------- Gráfico ----------
-    function renderChart() {
+    function renderChart(filterValue = 'all') {
+        const scopedWeeks = getScopedWeeks(filterValue);
         const ctx = document.getElementById('attendanceChart').getContext('2d');
-        const labels = weeksData.map((_, i) => `S${i + 1}`);
-        const weeklyPresences = weeksData.map(week =>
+        const labels = scopedWeeks.map((_, i) => `S${i + 1}`);
+        const weeklyPresences = scopedWeeks.map(week =>
             week.participants.reduce((acc, p) => acc + p.presences.filter(v => v === 1).length, 0)
         );
-        const weeklyAbsences = weeksData.map(week =>
+        const weeklyAbsences = scopedWeeks.map(week =>
             week.participants.reduce((acc, p) => acc + p.presences.filter(v => v === 0).length, 0)
         );
-        new Chart(ctx, {
+
+        if (attendanceChartInstance) attendanceChartInstance.destroy();
+        attendanceChartInstance = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels,
@@ -322,12 +341,13 @@
         });
     }
 
-    function renderRadarChart() {
+    function renderRadarChart(filterValue = 'all') {
+        const scopedWeeks = getScopedWeeks(filterValue);
         const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
         const presences = new Array(7).fill(0);
         const absences  = new Array(7).fill(0);
 
-        weeksData.forEach(week => {
+        scopedWeeks.forEach(week => {
             week.days.forEach((dateStr, dayIdx) => {
                 const [dd, mm] = dateStr.split('/').map(Number);
                 const jsDay = new Date(2026, mm - 1, dd).getDay();
@@ -354,7 +374,10 @@
             }
         });
 
-        new Chart(document.getElementById('radarPresences').getContext('2d'), {
+        if (radarPresencesInstance) radarPresencesInstance.destroy();
+        if (radarAbsencesInstance) radarAbsencesInstance.destroy();
+
+        radarPresencesInstance = new Chart(document.getElementById('radarPresences').getContext('2d'), {
             type: 'radar',
             data: {
                 labels: dayLabels,
@@ -370,7 +393,7 @@
             options: radarOpts('#9affc0', 'rgba(154, 255, 192, 0.22)')
         });
 
-        new Chart(document.getElementById('radarAbsences').getContext('2d'), {
+        radarAbsencesInstance = new Chart(document.getElementById('radarAbsences').getContext('2d'), {
             type: 'radar',
             data: {
                 labels: dayLabels,
@@ -387,12 +410,16 @@
         });
     }
 
-    filterSelect.addEventListener('change', e => renderWeeks(e.target.value));
+    function refreshByFilter(filterValue = 'all') {
+        renderWeeks(filterValue);
+        computeStats(filterValue);
+        renderChart(filterValue);
+        renderRadarChart(filterValue);
+    }
+
+    filterSelect.addEventListener('change', e => refreshByFilter(e.target.value));
 
     // ---------- Inicialização ----------
-    renderWeeks('all');
-    computeStats();
-    renderChart();
-    renderRadarChart();
+    refreshByFilter('all');
 
 })();

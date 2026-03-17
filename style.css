@@ -130,6 +130,10 @@ body::before {
     color: #dbd0ff;
 }
 
+.panel-title--center {
+    justify-content: center;
+}
+
 .panel-title i {
     color: #a27bff;
 }

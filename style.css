@@ -1,0 +1,339 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(145deg, #0d0b1a 0%, #1a1a2e 100%);
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+    color: #e2e0f0;
+    position: relative;
+}
+
+/* background glow */
+body::before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle at 10% 20%, rgba(120, 80, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(200, 120, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* header com título e stats */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.title-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff, #cfc5ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.title-section p {
+    color: #9f99c5;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+}
+
+.stats-cards {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: rgba(25, 22, 45, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
+}
+
+.stat-icon {
+    width: 3.2rem;
+    height: 3.2rem;
+    background: linear-gradient(45deg, #5f4bcb, #8a74ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.stat-info h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-info span {
+    font-size: 0.9rem;
+    color: #b1abda;
+}
+
+/* seção resumo do mês (gráfico e ranking) */
+.insight-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.8rem;
+    margin-bottom: 2.5rem;
+}
+
+.glass-panel {
+    background: rgba(22, 20, 38, 0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 2.5rem;
+    padding: 1.8rem 2rem;
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 20px 40px -15px black;
+}
+
+.panel-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #dbd0ff;
+}
+
+.panel-title i {
+    color: #a27bff;
+}
+
+/* ranking lista */
+.ranking-list {
+    list-style: none;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.ranking-pos {
+    font-weight: 800;
+    font-size: 1.2rem;
+    width: 2.5rem;
+    color: #8f86c0;
+}
+
+.ranking-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.ranking-value {
+    background: rgba(120, 90, 200, 0.3);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    font-weight: 600;
+    border: 1px solid rgba(200,170,255,0.2);
+}
+
+.chart-container {
+    height: 200px;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* painel de semanas (tabelas) */
+.weeks-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.week-card {
+    background: rgba(18, 16, 32, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 2rem;
+    padding: 1.5rem 1.8rem;
+    border: 1px solid rgba(255,255,255,0.03);
+    transition: all 0.15s;
+}
+
+.week-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.week-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #bfb2ff, #ded3ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.week-toggle i {
+    font-size: 1.3rem;
+    color: #9d8eff;
+    transition: transform 0.3s;
+}
+
+.week-table-wrapper {
+    overflow-x: auto;
+    transition: max-height 0.4s ease;
+}
+
+.week-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 800px;
+}
+
+.week-table th {
+    text-align: left;
+    padding: 0.8rem 0.5rem;
+    color: #b3abeb;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.week-table td {
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+
+.participant-name {
+    font-weight: 600;
+    color: white;
+}
+
+.presence-cell {
+    text-align: center;
+}
+
+.badge-presence {
+    background: rgba(0, 200, 100, 0.2);
+    color: #9affc0;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.badge-absence {
+    background: rgba(255, 70, 70, 0.2);
+    color: #ffa7a7;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.financial {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+}
+
+.positive {
+    color: #b4ffb4;
+}
+
+.negative {
+    color: #ffa8a8;
+}
+
+.dot-present {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #24d37f;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #1fdf8b;
+}
+
+.dot-absent {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #f65353;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ff5e5e;
+}
+
+/* collapse */
+.collapsed .week-table-wrapper {
+    max-height: 0 !important;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* filtro e navegação */
+.filter-bar {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.filter-select {
+    background: rgba(30, 27, 48, 0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3rem;
+    padding: 0.7rem 1.5rem;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    cursor: pointer;
+}
+
+/* responsividade */
+@media (max-width: 900px) {
+    .insight-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-week {
+    background: rgba(100, 80, 200, 0.3);
+    border: none;
+    color: white;
+    padding: 0.3rem 1.2rem;
+    border-radius: 30px;
+    border: 1px solid rgba(200,180,255,0.2);
+    font-size: 0.9rem;
+}

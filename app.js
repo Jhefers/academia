@@ -1,0 +1,242 @@
+(function () {
+    // ---------- Dados ----------
+    const weeksData = [
+        { name: "Semana 1 (01/01 - 07/01)", days: ["01/01","02/01","03/01","04/01","05/01","06/01","07/01"], participants: [
+            { name: "Camilo",    presences: [0,1,1,0,0,0,0], pagar:30, receber:0 },
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:8.18 },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:8.18 },
+            { name: "Jheferson", presences: [0,1,1,1,1,0,1], pagar:0,  receber:6.82 },
+            { name: "Paulo",     presences: [0,1,1,1,0,1,1], pagar:0,  receber:6.82 }
+        ]},
+        { name: "Semana 2 (08/01 - 14/01)", days: ["08/01","09/01","10/01","11/01","12/01","13/01","14/01"], participants: [
+            { name: "Camilo",    presences: [0,1,0,1,1,1,0], pagar:10, receber:0 },
+            { name: "Claudinei", presences: [0,1,1,0,0,0,0], pagar:30, receber:0 },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:32.73 },
+            { name: "Jheferson", presences: [0,1,1,1,0,1,1], pagar:0,  receber:27.27 },
+            { name: "Paulo",     presences: [0,0,1,1,0,1,0], pagar:20, receber:0 }
+        ]},
+        { name: "Semana 3 (15/01 - 21/01)", days: ["15/01","16/01","17/01","18/01","19/01","20/01","21/01"], participants: [
+            { name: "Camilo",    presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:24.71 },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:24.71 },
+            { name: "Jheferson", presences: [1,1,1,0,0,1,1], pagar:0,  receber:20.59 },
+            { name: "Paulo",     presences: [0,1,0,0,1,0,0], pagar:30, receber:0 }
+        ]},
+        { name: "Semana 4 (22/01 - 28/01)", days: ["22/01","23/01","24/01","25/01","26/01","27/01","28/01"], participants: [
+            { name: "Camilo",    presences: [0,0,0,0,0,0,0], pagar:50, receber:0 },
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:23.33 },
+            { name: "Gustavo",   presences: [1,1,1,1,1,1,1], pagar:0,  receber:27.22 },
+            { name: "Jheferson", presences: [1,1,0,1,1,1,0], pagar:0,  receber:19.44 },
+            { name: "Paulo",     presences: [0,1,0,0,1,1,0], pagar:20, receber:0 }
+        ]},
+        { name: "Semana 5 (29/01 - 04/02)", days: ["29/01","30/01","31/01","01/02","02/02","03/02","04/02"], participants: [
+            { name: "Claudinei", presences: [0,1,1,0,1,1,1], pagar:0,  receber:9.62 },
+            { name: "Edmar",     presences: [0,1,1,1,1,1,0], pagar:0,  receber:9.62 },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:11.54 },
+            { name: "Jheferson", presences: [0,1,1,1,1,0,1], pagar:0,  receber:9.62 },
+            { name: "Paulo",     presences: [0,0,1,1,1,1,1], pagar:0,  receber:9.62 },
+            { name: "Pierre",    presences: [0,0,0,0,0,0,0], pagar:50, receber:0 }
+        ]},
+        { name: "Semana 6 (05/02 - 11/02)", days: ["05/02","06/02","07/02","08/02","09/02","10/02","11/02"], participants: [
+            { name: "Claudinei", presences: [0,1,0,1,1,1,1], pagar:0,  receber:14.29 },
+            { name: "Edmar",     presences: [0,1,1,1,1,0,0], pagar:10, receber:0 },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,0], pagar:0,  receber:14.29 },
+            { name: "Jheferson", presences: [0,1,1,1,0,1,1], pagar:0,  receber:14.29 },
+            { name: "Paulo",     presences: [0,1,1,1,1,1,1], pagar:0,  receber:17.14 },
+            { name: "Pierre",    presences: [0,0,0,0,0,0,0], pagar:50, receber:0 }
+        ]},
+        { name: "Semana 7 (12/02 - 18/02)", days: ["12/02","13/02","14/02","15/02","16/02","17/02","18/02"], participants: [
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:14.12 },
+            { name: "Edmar",     presences: [0,0,0,1,1,0,0], pagar:30, receber:0 },
+            { name: "Gustavo",   presences: [1,1,1,0,1,1,1], pagar:0,  receber:14.12 },
+            { name: "Jheferson", presences: [0,1,1,0,0,1,1], pagar:10, receber:0 },
+            { name: "Paulo",     presences: [0,1,1,1,0,1,1], pagar:0,  receber:11.76 }
+        ]},
+        { name: "Semana 8 (19/02 - 25/02)", days: ["19/02","20/02","21/02","22/02","23/02","24/02","25/02"], participants: [
+            { name: "Claudinei", presences: [0,0,1,1,1,1,1], pagar:0, receber:0 },
+            { name: "Edmar",     presences: [0,1,1,1,1,1,0], pagar:0, receber:0 },
+            { name: "Gustavo",   presences: [1,1,1,1,1,1,1], pagar:0, receber:0 },
+            { name: "Jheferson", presences: [0,1,1,1,1,1,0], pagar:0, receber:0 },
+            { name: "Paulo",     presences: [0,1,1,1,1,1,0], pagar:0, receber:0 }
+        ]},
+        { name: "Semana 9 (26/02 - 04/03)", days: ["26/02","27/02","28/02","01/03","02/03","03/03","04/03"], participants: [
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:6.92 },
+            { name: "Edmar",     presences: [0,1,1,0,1,1,0], pagar:10, receber:0 },
+            { name: "Gustavo",   presences: [1,1,1,1,0,0,1], pagar:0,  receber:5.77 },
+            { name: "Jheferson", presences: [0,0,1,1,0,1,1], pagar:10, receber:0 },
+            { name: "Juliano",   presences: [1,1,1,1,1,0,0], pagar:0,  receber:5.77 },
+            { name: "Luciano",   presences: [0,1,1,1,1,0,0], pagar:10, receber:0 },
+            { name: "Marcos",    presences: [1,1,1,0,1,1,0], pagar:0,  receber:5.77 },
+            { name: "Paulo",     presences: [0,1,1,1,1,1,0], pagar:0,  receber:5.77 }
+        ]},
+        { name: "Semana 10 (05/03 - 11/03)", days: ["05/03","06/03","07/03","08/03","09/03","10/03","11/03"], participants: [
+            { name: "Claudinei", presences: [0,1,1,1,1,1,0], pagar:0,  receber:4.84 },
+            { name: "Edmar",     presences: [0,1,1,0,1,0,1], pagar:10, receber:0 },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:5.81 },
+            { name: "Jheferson", presences: [0,1,1,1,1,0,1], pagar:0,  receber:4.84 },
+            { name: "Juliano",   presences: [0,1,1,0,1,1,1], pagar:0,  receber:4.84 },
+            { name: "Luciano",   presences: [0,1,1,1,1,1,0], pagar:0,  receber:4.84 },
+            { name: "Marcos",    presences: [0,1,1,1,1,1,0], pagar:0,  receber:4.84 },
+            { name: "Paulo",     presences: [0,1,0,1,1,0,0], pagar:20, receber:0 }
+        ]},
+        { name: "Semana 11 (12/03 - 18/03)", days: ["12/03","13/03","14/03","15/03","16/03","17/03","18/03"], participants: [
+            { name: "Claudinei", presences: [1,1,0,0,0,0,0], pagar:30, receber:0 },
+            { name: "Edmar",     presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
+            { name: "Gustavo",   presences: [1,1,0,0,0,0,0], pagar:30, receber:0 },
+            { name: "Jheferson", presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
+            { name: "Juliano",   presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
+            { name: "Luciano",   presences: [0,0,0,0,0,0,0], pagar:50, receber:0 },
+            { name: "Marcos",    presences: [0,1,0,0,0,0,0], pagar:40, receber:0 },
+            { name: "Paulo",     presences: [0,0,0,0,0,0,0], pagar:50, receber:0 }
+        ]}
+    ];
+
+    // ---------- Setup ----------
+    const allParticipantsSet = new Set();
+    weeksData.forEach(week => week.participants.forEach(p => allParticipantsSet.add(p.name)));
+    const allParticipants = Array.from(allParticipantsSet).sort();
+
+    const weeksContainer  = document.getElementById('weeksContainer');
+    const filterSelect    = document.getElementById('participantFilter');
+    const rankingList     = document.getElementById('ranking-list');
+    const statsCards      = document.getElementById('stats-cards');
+    const totalFundSpan   = document.getElementById('totalFund');
+
+    allParticipants.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        filterSelect.appendChild(opt);
+    });
+
+    let collapsedWeeks = new Array(weeksData.length).fill(false);
+
+    // ---------- Renderização das semanas ----------
+    function renderWeeks(filterValue = 'all') {
+        let htmlStr = '';
+        weeksData.forEach((week, idx) => {
+            const collapsedClass = collapsedWeeks[idx] ? 'collapsed' : '';
+            let rows = '';
+            week.participants.forEach(p => {
+                const highlight = (filterValue !== 'all' && p.name === filterValue)
+                    ? 'style="background: rgba(150, 120, 255, 0.15);"'
+                    : '';
+                let daysCells = '';
+                p.presences.forEach(val => {
+                    const cls = val === 1 ? 'dot-present' : 'dot-absent';
+                    daysCells += `<td class="presence-cell"><span class="${cls}" title="${val === 1 ? 'Presente' : 'Falta'}"></span></td>`;
+                });
+                const presCount = p.presences.filter(v => v === 1).length;
+                rows += `<tr ${highlight}>
+                    <td class="participant-name">${p.name}</td>
+                    ${daysCells}
+                    <td><span class="badge-presence">${presCount}</span></td>
+                    <td class="financial negative">R$ ${p.pagar.toFixed(2)}</td>
+                    <td class="financial positive">R$ ${p.receber.toFixed(2)}</td>
+                </tr>`;
+            });
+
+            htmlStr += `<div class="week-card ${collapsedClass}" data-week="${idx}">
+                <div class="week-header" onclick="toggleWeek(${idx})">
+                    <span class="week-title">${week.name}</span>
+                    <span class="week-toggle"><i class="fa-solid fa-chevron-${collapsedWeeks[idx] ? 'down' : 'up'}"></i></span>
+                </div>
+                <div class="week-table-wrapper">
+                    <table class="week-table">
+                        <thead>
+                            <tr><th>Participante</th>${week.days.map(d => `<th>${d}</th>`).join('')}<th>Presenças</th><th>A pagar</th><th>A receber</th></tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>
+            </div>`;
+        });
+        weeksContainer.innerHTML = htmlStr;
+    }
+
+    window.toggleWeek = function (idx) {
+        collapsedWeeks[idx] = !collapsedWeeks[idx];
+        renderWeeks(filterSelect.value);
+    };
+
+    // ---------- Estatísticas e ranking ----------
+    function computeStats() {
+        let totalPresenceSum = 0;
+        const presenceMap = new Map();
+
+        weeksData.forEach(week => {
+            week.participants.forEach(p => {
+                const presCount = p.presences.filter(v => v === 1).length;
+                totalPresenceSum += presCount;
+                presenceMap.set(p.name, (presenceMap.get(p.name) || 0) + presCount);
+            });
+        });
+
+        // ranking
+        const ranking = Array.from(presenceMap.entries()).sort((a, b) => b[1] - a[1]);
+        rankingList.innerHTML = ranking.slice(0, 5).map(([name, count], i) =>
+            `<li class="ranking-item">
+                <span class="ranking-pos">#${i + 1}</span>
+                <span class="ranking-name">${name}</span>
+                <span class="ranking-value">${count} presenças</span>
+            </li>`
+        ).join('');
+
+        // cards
+        const mediaPresencas = (totalPresenceSum / allParticipants.length).toFixed(1);
+        statsCards.innerHTML = `
+            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-info"><h3>${allParticipants.length}</h3><span>participantes</span></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div><div class="stat-info"><h3>${totalPresenceSum}</h3><span>presenças totais</span></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div><div class="stat-info"><h3>${mediaPresencas}</h3><span>média/pessoa</span></div></div>
+        `;
+
+        // fundo total (arrecadado - distribuído)
+        let totalPagar = 0, totalReceber = 0;
+        weeksData.forEach(w => w.participants.forEach(p => {
+            totalPagar  += p.pagar;
+            totalReceber += p.receber;
+        }));
+        totalFundSpan.innerText = `R$ ${(totalPagar - totalReceber).toFixed(2)}`;
+    }
+
+    // ---------- Gráfico ----------
+    function renderChart() {
+        const ctx = document.getElementById('attendanceChart').getContext('2d');
+        const weeklyTotals = weeksData.map(week =>
+            week.participants.reduce((acc, p) => acc + p.presences.filter(v => v === 1).length, 0)
+        );
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: weeksData.map((_, i) => `S${i + 1}`),
+                datasets: [{
+                    label: 'Presenças na semana',
+                    data: weeklyTotals,
+                    borderColor: '#9d8cff',
+                    backgroundColor: 'rgba(157, 140, 255, 0.2)',
+                    tension: 0.2,
+                    fill: true,
+                    pointBackgroundColor: '#b19cff',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#ccc' } } },
+                scales: {
+                    y: { grid: { color: '#333' }, ticks: { color: '#aaa' } },
+                    x: { ticks: { color: '#aaa' } }
+                }
+            }
+        });
+    }
+
+    filterSelect.addEventListener('change', e => renderWeeks(e.target.value));
+
+    // ---------- Inicialização ----------
+    renderWeeks('all');
+    computeStats();
+    renderChart();
+
+})();

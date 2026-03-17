@@ -560,20 +560,21 @@ body::before {
         content: 'Saldo';
         font-size: 0.65rem;
     }
-    .weeks-section {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+    .weeks-section,
+    #weeksContainer {
+        width: 100% !important;
+        max-width: none !important;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
         gap: 1.4rem;
-        align-items: stretch;
     }
-    .week-card {
-        width: 100%;
-        max-width: none;
-        align-self: stretch;
+    #weeksContainer > .week-card,
+    .weeks-section > .week-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
         display: block;
-        margin-left: 0;
-        margin-right: 0;
+        margin: 0;
         box-sizing: border-box;
         padding: 1.45rem 1.2rem;
         border-radius: 1.5rem;

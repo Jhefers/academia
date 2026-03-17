@@ -288,7 +288,7 @@
             <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-info"><h3>${ranking.length}</h3><span>participantes</span></div></div>
             <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div><div class="stat-info"><h3>${totalPresenceSum}</h3><span>presenças totais</span></div></div>
             <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div><div class="stat-info"><h3>${mediaPresencas}</h3><span>média/pessoa</span></div></div>
-            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-scale-balanced"></i></div><div class="stat-info"><h3>R$ ${totalPagar.toFixed(2)}</h3><span>fundo total</span></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-scale-balanced"></i></div><div class="stat-info"><h3>R$&nbsp;${totalPagar.toFixed(2)}</h3><span>fundo total</span></div></div>
         `;
     }
 

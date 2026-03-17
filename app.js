@@ -237,7 +237,8 @@
         const totPresencas = ranking.reduce((acc, [name]) => acc + (presenceMap.get(name) || 0), 0);
         const totPago      = ranking.reduce((acc, [name]) => acc + (pagarMap.get(name)    || 0), 0);
         const totGanho     = ranking.reduce((acc, [name]) => acc + (receberMap.get(name)  || 0), 0);
-        const totSaldo     = totGanho - totPago;
+        const totSaldoRaw  = totGanho - totPago;
+        const totSaldo     = Math.abs(totSaldoRaw) < 0.005 ? 0 : totSaldoRaw;
         const totSaldoClass = totSaldo >= 0 ? 'rank-saldo-pos' : 'rank-saldo-neg';
         const totSaldoSinal = totSaldo >= 0 ? '+' : '';
 
@@ -284,13 +285,13 @@
             <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div><div class="stat-info"><h3>${mediaPresencas}</h3><span>média/pessoa</span></div></div>
         `;
 
-        // fundo total (arrecadado - distribuído)
+        // fundo total exibido como arrecadado (multas), pois o líquido tende a zero com redistribuição.
         let totalPagar = 0, totalReceber = 0;
         scopedWeeks.forEach(w => w.participants.forEach(p => {
             totalPagar  += p.pagar;
             totalReceber += p.receber;
         }));
-        totalFundSpan.innerText = `R$ ${(totalPagar - totalReceber).toFixed(2)}`;
+        totalFundSpan.innerText = `R$ ${totalPagar.toFixed(2)}`;
     }
 
     // ---------- Gráfico ----------

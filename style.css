@@ -494,6 +494,25 @@ body::before {
     .ranking-header {
         font-size: 0.65rem;
     }
+    .ranking-header .rc-num {
+        white-space: normal;
+        line-height: 1.05;
+        letter-spacing: 0.01em;
+    }
+    .ranking-header .rc-num:nth-child(3) {
+        font-size: 0;
+    }
+    .ranking-header .rc-num:nth-child(3)::after {
+        content: 'Pres.';
+        font-size: 0.62rem;
+    }
+    .ranking-header .rc-num:nth-child(6) {
+        font-size: 0;
+    }
+    .ranking-header .rc-num:nth-child(6)::after {
+        content: 'Saldo';
+        font-size: 0.62rem;
+    }
     .weeks-section {
         gap: 1.2rem;
     }

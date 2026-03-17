@@ -280,31 +280,43 @@
     // ---------- Gráfico ----------
     function renderChart() {
         const ctx = document.getElementById('attendanceChart').getContext('2d');
-        const weeklyTotals = weeksData.map(week =>
+        const labels = weeksData.map((_, i) => `S${i + 1}`);
+        const weeklyPresences = weeksData.map(week =>
             week.participants.reduce((acc, p) => acc + p.presences.filter(v => v === 1).length, 0)
         );
+        const weeklyAbsences = weeksData.map(week =>
+            week.participants.reduce((acc, p) => acc + p.presences.filter(v => v === 0).length, 0)
+        );
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: weeksData.map((_, i) => `S${i + 1}`),
-                datasets: [{
-                    label: 'Presenças na semana',
-                    data: weeklyTotals,
-                    borderColor: '#9d8cff',
-                    backgroundColor: 'rgba(157, 140, 255, 0.2)',
-                    tension: 0.2,
-                    fill: true,
-                    pointBackgroundColor: '#b19cff',
-                    borderWidth: 3
-                }]
+                labels,
+                datasets: [
+                    {
+                        label: 'Presenças',
+                        data: weeklyPresences,
+                        backgroundColor: 'rgba(154, 255, 192, 0.75)',
+                        borderColor: '#9affc0',
+                        borderWidth: 1,
+                        stack: 'stack'
+                    },
+                    {
+                        label: 'Faltas',
+                        data: weeklyAbsences,
+                        backgroundColor: 'rgba(255, 112, 112, 0.65)',
+                        borderColor: '#ff7070',
+                        borderWidth: 1,
+                        stack: 'stack'
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { labels: { color: '#ccc' } } },
                 scales: {
-                    y: { min: 0, grid: { color: '#333' }, ticks: { color: '#aaa' } },
-                    x: { ticks: { color: '#aaa' } }
+                    y: { min: 0, stacked: true, grid: { color: '#333' }, ticks: { color: '#aaa' } },
+                    x: { stacked: true, ticks: { color: '#aaa' } }
                 }
             }
         });

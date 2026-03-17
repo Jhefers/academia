@@ -140,46 +140,43 @@ body::before {
 }
 
 .ranking-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2.2rem 1fr repeat(4, minmax(5rem, auto));
     align-items: center;
-    padding: 0.9rem 0;
+    padding: 0.65rem 0.2rem;
     border-bottom: 1px solid rgba(255,255,255,0.05);
+    gap: 0.5rem;
 }
 
-.ranking-pos {
+.ranking-header {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #7a73a8;
+    padding-bottom: 0.5rem;
+}
+
+.rc-pos {
     font-weight: 800;
-    font-size: 1.2rem;
-    width: 2.5rem;
+    font-size: 1rem;
     color: #8f86c0;
+    text-align: center;
 }
 
-.ranking-name {
-    flex: 1;
-    font-weight: 500;
-}
-
-.ranking-value {
-    background: rgba(120, 90, 200, 0.3);
-    padding: 0.3rem 1rem;
-    border-radius: 30px;
+.rc-name {
     font-weight: 600;
-    border: 1px solid rgba(200,170,255,0.2);
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.rank-presencas {
-    font-size: 0.75rem;
-    color: #9d93cc;
-    font-weight: 400;
-}
-
-.rank-financials {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.15rem;
-    font-size: 0.82rem;
+.rc-num {
     font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
     font-weight: 500;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .rank-debito  { color: #ffa8a8; }

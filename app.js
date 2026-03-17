@@ -227,22 +227,31 @@
 
         // ranking ordenado por presenças
         const ranking = Array.from(presenceMap.entries()).sort((a, b) => b[1] - a[1]);
-        rankingList.innerHTML = ranking.map(([name, count], i) => {
-            const pago     = pagarMap.get(name)   || 0;
-            const ganho    = receberMap.get(name) || 0;
-            const saldo    = ganho - pago;
-            const saldoClass = saldo >= 0 ? 'rank-saldo-pos' : 'rank-saldo-neg';
-            const saldoSinal = saldo >= 0 ? '+' : '';
-            return `<li class="ranking-item">
-                <span class="ranking-pos">#${i + 1}</span>
-                <span class="ranking-name">${name}<br><span class="rank-presencas">${count} presenças</span></span>
-                <span class="rank-financials">
-                    <span class="rank-debito" title="Total pago">&#8593; R$&nbsp;${pago.toFixed(2)}</span>
-                    <span class="rank-credito" title="Total recebido">&#8595; R$&nbsp;${ganho.toFixed(2)}</span>
-                    <span class="${saldoClass}" title="Saldo líquido">${saldoSinal}R$&nbsp;${saldo.toFixed(2)}</span>
-                </span>
-            </li>`;
-        }).join('');
+        rankingList.innerHTML = `
+            <li class="ranking-item ranking-header">
+                <span class="rc-pos"></span>
+                <span class="rc-name">Nome</span>
+                <span class="rc-num">Presenças</span>
+                <span class="rc-num">Pago</span>
+                <span class="rc-num">Recebido</span>
+                <span class="rc-num">Saldo</span>
+            </li>
+            ${ranking.map(([name, count], i) => {
+                const pago  = pagarMap.get(name)   || 0;
+                const ganho = receberMap.get(name) || 0;
+                const saldo = ganho - pago;
+                const saldoClass = saldo >= 0 ? 'rank-saldo-pos' : 'rank-saldo-neg';
+                const saldoSinal = saldo >= 0 ? '+' : '';
+                return `<li class="ranking-item">
+                    <span class="rc-pos">#${i + 1}</span>
+                    <span class="rc-name">${name}</span>
+                    <span class="rc-num">${count}</span>
+                    <span class="rc-num rank-debito">R$&nbsp;${pago.toFixed(2)}</span>
+                    <span class="rc-num rank-credito">R$&nbsp;${ganho.toFixed(2)}</span>
+                    <span class="rc-num ${saldoClass}">${saldoSinal}R$&nbsp;${saldo.toFixed(2)}</span>
+                </li>`;
+            }).join('')}
+        `;
 
         // cards
         const mediaPresencas = (totalPresenceSum / allParticipants.length).toFixed(1);

@@ -146,9 +146,19 @@
         filterSelect.appendChild(opt);
     });
 
+    [
+        { value: 'last1', label: 'Última semana' },
+        { value: 'last4', label: 'Últimas 4 semanas' }
+    ].forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.value;
+        opt.textContent = item.label;
+        weekSelect.appendChild(opt);
+    });
+
     weeksData.forEach((week, idx) => {
         const opt = document.createElement('option');
-        opt.value = String(idx);
+        opt.value = `week-${idx}`;
         opt.textContent = week.name;
         weekSelect.appendChild(opt);
     });
@@ -157,9 +167,20 @@
 
     // ---------- Renderização das semanas ----------
     function getWeekEntries(weekFilter = 'all') {
-        return weeksData
-            .map((week, idx) => ({ week, idx }))
-            .filter(item => weekFilter === 'all' || String(item.idx) === String(weekFilter));
+        const all = weeksData.map((week, idx) => ({ week, idx }));
+
+        if (weekFilter === 'all') return all;
+        if (weekFilter === 'last1') return all.slice(-1);
+        if (weekFilter === 'last4') return all.slice(-4);
+
+        if (typeof weekFilter === 'string' && weekFilter.startsWith('week-')) {
+            const idx = Number(weekFilter.replace('week-', ''));
+            if (Number.isInteger(idx) && idx >= 0 && idx < all.length) {
+                return all.filter(item => item.idx === idx);
+            }
+        }
+
+        return all;
     }
 
     function renderWeeks(participantFilter = 'all', weekFilter = 'all') {

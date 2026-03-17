@@ -142,7 +142,7 @@
         filterSelect.appendChild(opt);
     });
 
-    let collapsedWeeks = new Array(weeksData.length).fill(false);
+    let collapsedWeeks = new Array(weeksData.length).fill(window.innerWidth < 600);
 
     // ---------- Renderização das semanas ----------
     function renderWeeks(filterValue = 'all') {

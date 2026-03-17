@@ -79,16 +79,6 @@
             { name: "Luciano",   presences: [0,1,1,1,1,1,0] },
             { name: "Marcos",    presences: [0,1,1,1,1,1,0] },
             { name: "Paulo",     presences: [0,1,0,1,1,0,0] }
-        ]},
-        { name: "Semana 11 (12/03 - 18/03)", days: ["12/03","13/03","14/03","15/03","16/03","17/03","18/03"], participants: [
-            { name: "Claudinei", presences: [1,1,0,0,0,0,0] },
-            { name: "Edmar",     presences: [1,0,0,0,0,0,0] },
-            { name: "Gustavo",   presences: [1,1,0,0,0,0,0] },
-            { name: "Jheferson", presences: [1,0,0,0,0,0,0] },
-            { name: "Juliano",   presences: [1,0,0,0,0,0,0] },
-            { name: "Luciano",   presences: [0,0,0,0,0,0,0] },
-            { name: "Marcos",    presences: [0,1,0,0,0,0,0] },
-            { name: "Paulo",     presences: [0,0,0,0,0,0,0] }
         ]}
     ];
 

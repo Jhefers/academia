@@ -313,7 +313,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#ccc' } } },
+                plugins: { legend: { display: false } },
                 scales: {
                     y: { min: 0, stacked: true, grid: { color: '#333' }, ticks: { color: '#aaa' } },
                     x: { stacked: true, ticks: { color: '#aaa' } }

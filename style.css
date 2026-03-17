@@ -65,9 +65,10 @@ body::before {
 }
 
 .stats-cards {
-    display: flex;
-    gap: 1.2rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+    width: min(920px, 100%);
 }
 
 .stats-cards > .stat-card {
@@ -461,10 +462,10 @@ body::before {
     }
     .stats-cards {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-auto-rows: 1fr;
         width: 100%;
-        gap: 0.6rem;
+        gap: 0.45rem;
         overflow-x: visible;
         padding-bottom: 0;
     }
@@ -472,7 +473,7 @@ body::before {
         min-width: 0;
         min-height: 95px;
         height: 100%;
-        padding: 0.8rem 0.6rem;
+        padding: 0.65rem 0.45rem;
         border-radius: 1rem;
         gap: 0.45rem;
         justify-content: center;

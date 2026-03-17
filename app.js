@@ -1,95 +1,138 @@
 (function () {
     // ---------- Dados ----------
+    // Apenas nome + presences. pagar/receber são calculados automaticamente.
     const weeksData = [
         { name: "Semana 1 (01/01 - 07/01)", days: ["01/01","02/01","03/01","04/01","05/01","06/01","07/01"], participants: [
-            { name: "Camilo",    presences: [0,1,1,0,0,0,0], pagar:30, receber:0 },
-            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:8.18 },
-            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:8.18 },
-            { name: "Jheferson", presences: [0,1,1,1,1,0,1], pagar:0,  receber:6.82 },
-            { name: "Paulo",     presences: [0,1,1,1,0,1,1], pagar:0,  receber:6.82 }
+            { name: "Camilo",    presences: [0,1,1,0,0,0,0] },
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1] },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [0,1,1,1,1,0,1] },
+            { name: "Paulo",     presences: [0,1,1,1,0,1,1] }
         ]},
         { name: "Semana 2 (08/01 - 14/01)", days: ["08/01","09/01","10/01","11/01","12/01","13/01","14/01"], participants: [
-            { name: "Camilo",    presences: [0,1,0,1,1,1,0], pagar:10, receber:0 },
-            { name: "Claudinei", presences: [0,1,1,0,0,0,0], pagar:30, receber:0 },
-            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:32.73 },
-            { name: "Jheferson", presences: [0,1,1,1,0,1,1], pagar:0,  receber:27.27 },
-            { name: "Paulo",     presences: [0,0,1,1,0,1,0], pagar:20, receber:0 }
+            { name: "Camilo",    presences: [0,1,0,1,1,1,0] },
+            { name: "Claudinei", presences: [0,1,1,0,0,0,0] },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [0,1,1,1,0,1,1] },
+            { name: "Paulo",     presences: [0,0,1,1,0,1,0] }
         ]},
         { name: "Semana 3 (15/01 - 21/01)", days: ["15/01","16/01","17/01","18/01","19/01","20/01","21/01"], participants: [
-            { name: "Camilo",    presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
-            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:24.71 },
-            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:24.71 },
-            { name: "Jheferson", presences: [1,1,1,0,0,1,1], pagar:0,  receber:20.59 },
-            { name: "Paulo",     presences: [0,1,0,0,1,0,0], pagar:30, receber:0 }
+            { name: "Camilo",    presences: [1,0,0,0,0,0,0] },
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1] },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [1,1,1,0,0,1,1] },
+            { name: "Paulo",     presences: [0,1,0,0,1,0,0] }
         ]},
         { name: "Semana 4 (22/01 - 28/01)", days: ["22/01","23/01","24/01","25/01","26/01","27/01","28/01"], participants: [
-            { name: "Camilo",    presences: [0,0,0,0,0,0,0], pagar:50, receber:0 },
-            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:23.33 },
-            { name: "Gustavo",   presences: [1,1,1,1,1,1,1], pagar:0,  receber:27.22 },
-            { name: "Jheferson", presences: [1,1,0,1,1,1,0], pagar:0,  receber:19.44 },
-            { name: "Paulo",     presences: [0,1,0,0,1,1,0], pagar:20, receber:0 }
+            { name: "Camilo",    presences: [0,0,0,0,0,0,0] },
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1] },
+            { name: "Gustavo",   presences: [1,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [1,1,0,1,1,1,0] },
+            { name: "Paulo",     presences: [0,1,0,0,1,1,0] }
         ]},
         { name: "Semana 5 (29/01 - 04/02)", days: ["29/01","30/01","31/01","01/02","02/02","03/02","04/02"], participants: [
-            { name: "Claudinei", presences: [0,1,1,0,1,1,1], pagar:0,  receber:9.62 },
-            { name: "Edmar",     presences: [0,1,1,1,1,1,0], pagar:0,  receber:9.62 },
-            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:11.54 },
-            { name: "Jheferson", presences: [0,1,1,1,1,0,1], pagar:0,  receber:9.62 },
-            { name: "Paulo",     presences: [0,0,1,1,1,1,1], pagar:0,  receber:9.62 },
-            { name: "Pierre",    presences: [0,0,0,0,0,0,0], pagar:50, receber:0 }
+            { name: "Claudinei", presences: [0,1,1,0,1,1,1] },
+            { name: "Edmar",     presences: [0,1,1,1,1,1,0] },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [0,1,1,1,1,0,1] },
+            { name: "Paulo",     presences: [0,0,1,1,1,1,1] },
+            { name: "Pierre",    presences: [0,0,0,0,0,0,0] }
         ]},
         { name: "Semana 6 (05/02 - 11/02)", days: ["05/02","06/02","07/02","08/02","09/02","10/02","11/02"], participants: [
-            { name: "Claudinei", presences: [0,1,0,1,1,1,1], pagar:0,  receber:14.29 },
-            { name: "Edmar",     presences: [0,1,1,1,1,0,0], pagar:10, receber:0 },
-            { name: "Gustavo",   presences: [0,1,1,1,1,1,0], pagar:0,  receber:14.29 },
-            { name: "Jheferson", presences: [0,1,1,1,0,1,1], pagar:0,  receber:14.29 },
-            { name: "Paulo",     presences: [0,1,1,1,1,1,1], pagar:0,  receber:17.14 },
-            { name: "Pierre",    presences: [0,0,0,0,0,0,0], pagar:50, receber:0 }
+            { name: "Claudinei", presences: [0,1,0,1,1,1,1] },
+            { name: "Edmar",     presences: [0,1,1,1,1,0,0] },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,0] },
+            { name: "Jheferson", presences: [0,1,1,1,0,1,1] },
+            { name: "Paulo",     presences: [0,1,1,1,1,1,1] },
+            { name: "Pierre",    presences: [0,0,0,0,0,0,0] }
         ]},
         { name: "Semana 7 (12/02 - 18/02)", days: ["12/02","13/02","14/02","15/02","16/02","17/02","18/02"], participants: [
-            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:14.12 },
-            { name: "Edmar",     presences: [0,0,0,1,1,0,0], pagar:30, receber:0 },
-            { name: "Gustavo",   presences: [1,1,1,0,1,1,1], pagar:0,  receber:14.12 },
-            { name: "Jheferson", presences: [0,1,1,0,0,1,1], pagar:10, receber:0 },
-            { name: "Paulo",     presences: [0,1,1,1,0,1,1], pagar:0,  receber:11.76 }
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1] },
+            { name: "Edmar",     presences: [0,0,0,1,1,0,0] },
+            { name: "Gustavo",   presences: [1,1,1,0,1,1,1] },
+            { name: "Jheferson", presences: [0,1,1,0,0,1,1] },
+            { name: "Paulo",     presences: [0,1,1,1,0,1,1] }
         ]},
         { name: "Semana 8 (19/02 - 25/02)", days: ["19/02","20/02","21/02","22/02","23/02","24/02","25/02"], participants: [
-            { name: "Claudinei", presences: [0,0,1,1,1,1,1], pagar:0, receber:0 },
-            { name: "Edmar",     presences: [0,1,1,1,1,1,0], pagar:0, receber:0 },
-            { name: "Gustavo",   presences: [1,1,1,1,1,1,1], pagar:0, receber:0 },
-            { name: "Jheferson", presences: [0,1,1,1,1,1,0], pagar:0, receber:0 },
-            { name: "Paulo",     presences: [0,1,1,1,1,1,0], pagar:0, receber:0 }
+            { name: "Claudinei", presences: [0,0,1,1,1,1,1] },
+            { name: "Edmar",     presences: [0,1,1,1,1,1,0] },
+            { name: "Gustavo",   presences: [1,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [0,1,1,1,1,1,0] },
+            { name: "Paulo",     presences: [0,1,1,1,1,1,0] }
         ]},
         { name: "Semana 9 (26/02 - 04/03)", days: ["26/02","27/02","28/02","01/03","02/03","03/03","04/03"], participants: [
-            { name: "Claudinei", presences: [0,1,1,1,1,1,1], pagar:0,  receber:6.92 },
-            { name: "Edmar",     presences: [0,1,1,0,1,1,0], pagar:10, receber:0 },
-            { name: "Gustavo",   presences: [1,1,1,1,0,0,1], pagar:0,  receber:5.77 },
-            { name: "Jheferson", presences: [0,0,1,1,0,1,1], pagar:10, receber:0 },
-            { name: "Juliano",   presences: [1,1,1,1,1,0,0], pagar:0,  receber:5.77 },
-            { name: "Luciano",   presences: [0,1,1,1,1,0,0], pagar:10, receber:0 },
-            { name: "Marcos",    presences: [1,1,1,0,1,1,0], pagar:0,  receber:5.77 },
-            { name: "Paulo",     presences: [0,1,1,1,1,1,0], pagar:0,  receber:5.77 }
+            { name: "Claudinei", presences: [0,1,1,1,1,1,1] },
+            { name: "Edmar",     presences: [0,1,1,0,1,1,0] },
+            { name: "Gustavo",   presences: [1,1,1,1,0,0,1] },
+            { name: "Jheferson", presences: [0,0,1,1,0,1,1] },
+            { name: "Juliano",   presences: [1,1,1,1,1,0,0] },
+            { name: "Luciano",   presences: [0,1,1,1,1,0,0] },
+            { name: "Marcos",    presences: [1,1,1,0,1,1,0] },
+            { name: "Paulo",     presences: [0,1,1,1,1,1,0] }
         ]},
         { name: "Semana 10 (05/03 - 11/03)", days: ["05/03","06/03","07/03","08/03","09/03","10/03","11/03"], participants: [
-            { name: "Claudinei", presences: [0,1,1,1,1,1,0], pagar:0,  receber:4.84 },
-            { name: "Edmar",     presences: [0,1,1,0,1,0,1], pagar:10, receber:0 },
-            { name: "Gustavo",   presences: [0,1,1,1,1,1,1], pagar:0,  receber:5.81 },
-            { name: "Jheferson", presences: [0,1,1,1,1,0,1], pagar:0,  receber:4.84 },
-            { name: "Juliano",   presences: [0,1,1,0,1,1,1], pagar:0,  receber:4.84 },
-            { name: "Luciano",   presences: [0,1,1,1,1,1,0], pagar:0,  receber:4.84 },
-            { name: "Marcos",    presences: [0,1,1,1,1,1,0], pagar:0,  receber:4.84 },
-            { name: "Paulo",     presences: [0,1,0,1,1,0,0], pagar:20, receber:0 }
+            { name: "Claudinei", presences: [0,1,1,1,1,1,0] },
+            { name: "Edmar",     presences: [0,1,1,0,1,0,1] },
+            { name: "Gustavo",   presences: [0,1,1,1,1,1,1] },
+            { name: "Jheferson", presences: [0,1,1,1,1,0,1] },
+            { name: "Juliano",   presences: [0,1,1,0,1,1,1] },
+            { name: "Luciano",   presences: [0,1,1,1,1,1,0] },
+            { name: "Marcos",    presences: [0,1,1,1,1,1,0] },
+            { name: "Paulo",     presences: [0,1,0,1,1,0,0] }
         ]},
         { name: "Semana 11 (12/03 - 18/03)", days: ["12/03","13/03","14/03","15/03","16/03","17/03","18/03"], participants: [
-            { name: "Claudinei", presences: [1,1,0,0,0,0,0], pagar:30, receber:0 },
-            { name: "Edmar",     presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
-            { name: "Gustavo",   presences: [1,1,0,0,0,0,0], pagar:30, receber:0 },
-            { name: "Jheferson", presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
-            { name: "Juliano",   presences: [1,0,0,0,0,0,0], pagar:40, receber:0 },
-            { name: "Luciano",   presences: [0,0,0,0,0,0,0], pagar:50, receber:0 },
-            { name: "Marcos",    presences: [0,1,0,0,0,0,0], pagar:40, receber:0 },
-            { name: "Paulo",     presences: [0,0,0,0,0,0,0], pagar:50, receber:0 }
+            { name: "Claudinei", presences: [1,1,0,0,0,0,0] },
+            { name: "Edmar",     presences: [1,0,0,0,0,0,0] },
+            { name: "Gustavo",   presences: [1,1,0,0,0,0,0] },
+            { name: "Jheferson", presences: [1,0,0,0,0,0,0] },
+            { name: "Juliano",   presences: [1,0,0,0,0,0,0] },
+            { name: "Luciano",   presences: [0,0,0,0,0,0,0] },
+            { name: "Marcos",    presences: [0,1,0,0,0,0,0] },
+            { name: "Paulo",     presences: [0,0,0,0,0,0,0] }
         ]}
     ];
+
+    // ---------- Cálculo financeiro automático ----------
+    // Regra: mínimo 5 presenças para ser elegível.
+    // Abaixo de 5: paga (5 - presenças) * R$10 (máx R$50 com 0 presenças).
+    // Elegíveis recebem o pot proporcional às suas presenças.
+    function calcWeekFinancials(week) {
+        const MINIMO = 5;
+        const MULTA_POR_DIA = 10;
+
+        const counts = week.participants.map(p => p.presences.filter(v => v === 1).length);
+
+        // pot = soma das multas de quem não atingiu o mínimo
+        let pot = 0;
+        counts.forEach(c => {
+            if (c < MINIMO) pot += (MINIMO - c) * MULTA_POR_DIA;
+        });
+
+        // total de presenças dos elegíveis
+        const totalEligiblePresences = counts.reduce((acc, c) => acc + (c >= MINIMO ? c : 0), 0);
+
+        return week.participants.map((p, i) => {
+            const c = counts[i];
+            if (c >= MINIMO) {
+                return {
+                    ...p,
+                    pagar: 0,
+                    receber: totalEligiblePresences > 0 ? (c / totalEligiblePresences) * pot : 0
+                };
+            } else {
+                return {
+                    ...p,
+                    pagar: (MINIMO - c) * MULTA_POR_DIA,
+                    receber: 0
+                };
+            }
+        });
+    }
+
+    // Aplica o cálculo em todas as semanas
+    weeksData.forEach(week => {
+        week.participants = calcWeekFinancials(week);
+    });
 
     // ---------- Setup ----------
     const allParticipantsSet = new Set();

@@ -176,6 +176,7 @@ body::before {
 
 .rc-name {
     font-weight: 600;
+    font-size: 0.93rem;
     color: white;
     white-space: nowrap;
     overflow: hidden;
@@ -530,6 +531,7 @@ body::before {
     }
     .ranking-item .rc-name {
         text-align: left;
+        font-size: 0.84rem;
     }
     .ranking-item > span:nth-child(3) {
         justify-self: center;

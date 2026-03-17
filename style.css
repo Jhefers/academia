@@ -558,10 +558,15 @@ body::before {
         font-size: 0.65rem;
     }
     .weeks-section {
+        width: 100%;
         gap: 1.4rem;
+        align-items: stretch;
     }
     .week-card {
         width: 100%;
+        max-width: none;
+        align-self: stretch;
+        display: block;
         padding: 1.45rem 1.2rem;
         border-radius: 1.5rem;
     }
@@ -574,6 +579,9 @@ body::before {
     .week-table {
         font-size: 0.84rem;
         min-width: 520px;
+    }
+    .week-table-wrapper {
+        width: 100%;
     }
     .week-table th,
     .week-table td {

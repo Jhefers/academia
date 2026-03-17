@@ -558,25 +558,26 @@ body::before {
         font-size: 0.65rem;
     }
     .weeks-section {
-        gap: 1.2rem;
+        gap: 1.4rem;
     }
     .week-card {
-        padding: 1.2rem 1rem;
-        border-radius: 1.3rem;
+        width: 100%;
+        padding: 1.45rem 1.2rem;
+        border-radius: 1.5rem;
     }
     .week-header {
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
     }
     .week-title {
-        font-size: 1.15rem;
+        font-size: 1.22rem;
     }
     .week-table {
-        font-size: 0.78rem;
+        font-size: 0.84rem;
         min-width: 520px;
     }
     .week-table th,
     .week-table td {
-        padding: 0.6rem 0.4rem;
+        padding: 0.7rem 0.5rem;
     }
     .filter-bar {
         gap: 0.8rem;

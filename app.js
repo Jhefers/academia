@@ -131,6 +131,7 @@
 
     const weeksContainer  = document.getElementById('weeksContainer');
     const filterSelect    = document.getElementById('participantFilter');
+    const weekSelect      = document.getElementById('weekFilter');
     const rankingList     = document.getElementById('ranking-list');
     const statsCards      = document.getElementById('stats-cards');
 
@@ -145,16 +146,30 @@
         filterSelect.appendChild(opt);
     });
 
+    weeksData.forEach((week, idx) => {
+        const opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = week.name;
+        weekSelect.appendChild(opt);
+    });
+
     let collapsedWeeks = new Array(weeksData.length).fill(window.innerWidth < 600);
 
     // ---------- Renderização das semanas ----------
-    function renderWeeks(filterValue = 'all') {
+    function getWeekEntries(weekFilter = 'all') {
+        return weeksData
+            .map((week, idx) => ({ week, idx }))
+            .filter(item => weekFilter === 'all' || String(item.idx) === String(weekFilter));
+    }
+
+    function renderWeeks(participantFilter = 'all', weekFilter = 'all') {
+        const weekEntries = getWeekEntries(weekFilter);
         let htmlStr = '';
-        weeksData.forEach((week, idx) => {
+        weekEntries.forEach(({ week, idx }) => {
             const collapsedClass = collapsedWeeks[idx] ? 'collapsed' : '';
             let rows = '';
             week.participants.forEach(p => {
-                const highlight = (filterValue !== 'all' && p.name === filterValue)
+                const highlight = (participantFilter !== 'all' && p.name === participantFilter)
                     ? 'style="background: rgba(150, 120, 255, 0.15);"'
                     : '';
                 let daysCells = '';
@@ -192,22 +207,24 @@
 
     window.toggleWeek = function (idx) {
         collapsedWeeks[idx] = !collapsedWeeks[idx];
-        renderWeeks(filterSelect.value);
+        renderWeeks(filterSelect.value, weekSelect.value);
     };
 
     // ---------- Estatísticas e ranking ----------
-    function getScopedWeeks(filterValue = 'all') {
-        return weeksData.map(week => {
-            if (filterValue === 'all') return week;
+    function getScopedWeeks(participantFilter = 'all', weekFilter = 'all') {
+        const weekEntries = getWeekEntries(weekFilter);
+        return weekEntries.map(({ week, idx }) => {
+            if (participantFilter === 'all') return { ...week, _originalIndex: idx };
             return {
                 ...week,
-                participants: week.participants.filter(p => p.name === filterValue)
+                participants: week.participants.filter(p => p.name === participantFilter),
+                _originalIndex: idx
             };
         });
     }
 
-    function computeStats(filterValue = 'all') {
-        const scopedWeeks = getScopedWeeks(filterValue);
+    function computeStats(participantFilter = 'all', weekFilter = 'all') {
+        const scopedWeeks = getScopedWeeks(participantFilter, weekFilter);
         let totalPresenceSum = 0;
         const presenceMap = new Map();
 
@@ -290,10 +307,10 @@
     }
 
     // ---------- Gráfico ----------
-    function renderChart(filterValue = 'all') {
-        const scopedWeeks = getScopedWeeks(filterValue);
+    function renderChart(participantFilter = 'all', weekFilter = 'all') {
+        const scopedWeeks = getScopedWeeks(participantFilter, weekFilter);
         const ctx = document.getElementById('attendanceChart').getContext('2d');
-        const labels = scopedWeeks.map((_, i) => `S${i + 1}`);
+        const labels = scopedWeeks.map(week => `S${week._originalIndex + 1}`);
         const weeklyPresences = scopedWeeks.map(week =>
             week.participants.reduce((acc, p) => acc + p.presences.filter(v => v === 1).length, 0)
         );
@@ -337,8 +354,8 @@
         });
     }
 
-    function renderRadarChart(filterValue = 'all') {
-        const scopedWeeks = getScopedWeeks(filterValue);
+    function renderRadarChart(participantFilter = 'all', weekFilter = 'all') {
+        const scopedWeeks = getScopedWeeks(participantFilter, weekFilter);
         const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
         const presences = new Array(7).fill(0);
         const absences  = new Array(7).fill(0);
@@ -406,14 +423,19 @@
         });
     }
 
-    function refreshByFilter(filterValue = 'all') {
-        renderWeeks(filterValue);
-        computeStats(filterValue);
-        renderChart(filterValue);
-        renderRadarChart(filterValue);
+    function refreshByFilter(participantFilter = 'all', weekFilter = 'all') {
+        renderWeeks(participantFilter, weekFilter);
+        computeStats(participantFilter, weekFilter);
+        renderChart(participantFilter, weekFilter);
+        renderRadarChart(participantFilter, weekFilter);
     }
 
-    filterSelect.addEventListener('change', e => refreshByFilter(e.target.value));
+    function refreshFromInputs() {
+        refreshByFilter(filterSelect.value, weekSelect.value);
+    }
+
+    filterSelect.addEventListener('change', refreshFromInputs);
+    weekSelect.addEventListener('change', refreshFromInputs);
 
     // ---------- Inicialização ----------
     refreshByFilter('all');

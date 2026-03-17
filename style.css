@@ -166,6 +166,27 @@ body::before {
     border: 1px solid rgba(200,170,255,0.2);
 }
 
+.rank-presencas {
+    font-size: 0.75rem;
+    color: #9d93cc;
+    font-weight: 400;
+}
+
+.rank-financials {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+}
+
+.rank-debito  { color: #ffa8a8; }
+.rank-credito { color: #9affc0; }
+.rank-saldo-pos { color: #7fffb0; font-weight: 700; }
+.rank-saldo-neg { color: #ff7070; font-weight: 700; }
+
 .chart-container {
     height: 200px;
     width: 100%;

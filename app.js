@@ -215,15 +215,34 @@
             });
         });
 
-        // ranking
+        // acumular pagar/receber por participante
+        const pagarMap   = new Map();
+        const receberMap = new Map();
+        weeksData.forEach(week => {
+            week.participants.forEach(p => {
+                pagarMap.set(p.name,   (pagarMap.get(p.name)   || 0) + p.pagar);
+                receberMap.set(p.name, (receberMap.get(p.name) || 0) + p.receber);
+            });
+        });
+
+        // ranking ordenado por presenças
         const ranking = Array.from(presenceMap.entries()).sort((a, b) => b[1] - a[1]);
-        rankingList.innerHTML = ranking.slice(0, 5).map(([name, count], i) =>
-            `<li class="ranking-item">
+        rankingList.innerHTML = ranking.map(([name, count], i) => {
+            const pago     = pagarMap.get(name)   || 0;
+            const ganho    = receberMap.get(name) || 0;
+            const saldo    = ganho - pago;
+            const saldoClass = saldo >= 0 ? 'rank-saldo-pos' : 'rank-saldo-neg';
+            const saldoSinal = saldo >= 0 ? '+' : '';
+            return `<li class="ranking-item">
                 <span class="ranking-pos">#${i + 1}</span>
-                <span class="ranking-name">${name}</span>
-                <span class="ranking-value">${count} presenças</span>
-            </li>`
-        ).join('');
+                <span class="ranking-name">${name}<br><span class="rank-presencas">${count} presenças</span></span>
+                <span class="rank-financials">
+                    <span class="rank-debito" title="Total pago">&#8593; R$&nbsp;${pago.toFixed(2)}</span>
+                    <span class="rank-credito" title="Total recebido">&#8595; R$&nbsp;${ganho.toFixed(2)}</span>
+                    <span class="${saldoClass}" title="Saldo líquido">${saldoSinal}R$&nbsp;${saldo.toFixed(2)}</span>
+                </span>
+            </li>`;
+        }).join('');
 
         // cards
         const mediaPresencas = (totalPresenceSum / allParticipants.length).toFixed(1);

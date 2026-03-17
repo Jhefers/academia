@@ -200,6 +200,12 @@ body::before {
     margin-top: 1rem;
 }
 
+.radar-container {
+    height: 260px;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
 /* painel de semanas (tabelas) */
 .weeks-section {
     display: flex;

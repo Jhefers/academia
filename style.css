@@ -447,6 +447,20 @@ body::before {
         font-size: 1rem;
         margin-bottom: 0.8rem;
     }
+    .radar-row {
+        gap: 0.45rem;
+        flex-wrap: nowrap;
+    }
+    .radar-wrap {
+        flex: 0 0 calc(50% - 0.225rem);
+    }
+    .radar-label {
+        font-size: 0.66rem;
+        letter-spacing: 0.05em;
+    }
+    .radar-container {
+        height: 165px;
+    }
     /* ranking: ocultar Pago e Recebido no celular, exibir apenas Presenças e Saldo */
     .ranking-item {
         grid-template-columns: 1.8rem 1fr 3rem 5.5rem;

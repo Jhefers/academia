@@ -200,10 +200,34 @@ body::before {
     margin-top: 1rem;
 }
 
-.radar-container {
-    height: 260px;
-    width: 100%;
+.radar-row {
+    display: flex;
+    gap: 1rem;
     margin-top: 0.5rem;
+}
+
+.radar-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.radar-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.radar-label--green { color: #9affc0; }
+.radar-label--red   { color: #ff7070; }
+
+.radar-container {
+    height: 220px;
+    width: 100%;
 }
 
 /* painel de semanas (tabelas) */

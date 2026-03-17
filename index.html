@@ -30,8 +30,15 @@
                 <canvas id="attendanceChart"></canvas>
             </div>
             <div class="panel-title" style="margin-top:1.6rem;"><i class="fa-solid fa-circle-nodes"></i> Distribuição por dia da semana</div>
-            <div class="radar-container">
-                <canvas id="radarChart"></canvas>
+            <div class="radar-row">
+                <div class="radar-wrap">
+                    <div class="radar-label radar-label--green">Presenças</div>
+                    <div class="radar-container"><canvas id="radarPresences"></canvas></div>
+                </div>
+                <div class="radar-wrap">
+                    <div class="radar-label radar-label--red">Faltas</div>
+                    <div class="radar-container"><canvas id="radarAbsences"></canvas></div>
+                </div>
             </div>
         </div>
         <div class="glass-panel">

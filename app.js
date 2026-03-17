@@ -323,7 +323,6 @@
     }
 
     function renderRadarChart() {
-        // Agrupa presenças e faltas por dia da semana (Seg a Dom)
         const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
         const presences = new Array(7).fill(0);
         const absences  = new Array(7).fill(0);
@@ -331,8 +330,8 @@
         weeksData.forEach(week => {
             week.days.forEach((dateStr, dayIdx) => {
                 const [dd, mm] = dateStr.split('/').map(Number);
-                const jsDay = new Date(2026, mm - 1, dd).getDay(); // 0=Dom,1=Seg,...,6=Sáb
-                const ourIdx = jsDay === 0 ? 6 : jsDay - 1;       // Dom→6, Seg→0 ... Sáb→5
+                const jsDay = new Date(2026, mm - 1, dd).getDay();
+                const ourIdx = jsDay === 0 ? 6 : jsDay - 1;
                 week.participants.forEach(p => {
                     if (p.presences[dayIdx] === 1) presences[ourIdx]++;
                     else                           absences[ourIdx]++;
@@ -340,44 +339,51 @@
             });
         });
 
-        const ctx = document.getElementById('radarChart').getContext('2d');
-        new Chart(ctx, {
+        const radarOpts = (color, bgColor) => ({
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                r: {
+                    min: 0,
+                    grid:        { color: '#3a3555' },
+                    angleLines:  { color: '#3a3555' },
+                    pointLabels: { color: '#b3abeb', font: { size: 11 } },
+                    ticks:       { color: '#888', backdropColor: 'transparent', stepSize: 10 }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('radarPresences').getContext('2d'), {
             type: 'radar',
             data: {
                 labels: dayLabels,
-                datasets: [
-                    {
-                        label: 'Presenças',
-                        data: presences,
-                        borderColor: '#9affc0',
-                        backgroundColor: 'rgba(154, 255, 192, 0.18)',
-                        pointBackgroundColor: '#9affc0',
-                        borderWidth: 2
-                    },
-                    {
-                        label: 'Faltas',
-                        data: absences,
-                        borderColor: '#ff7070',
-                        backgroundColor: 'rgba(255, 112, 112, 0.13)',
-                        pointBackgroundColor: '#ff7070',
-                        borderWidth: 2
-                    }
-                ]
+                datasets: [{
+                    label: 'Presenças',
+                    data: presences,
+                    borderColor: '#9affc0',
+                    backgroundColor: 'rgba(154, 255, 192, 0.22)',
+                    pointBackgroundColor: '#9affc0',
+                    borderWidth: 2
+                }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#ccc', font: { size: 11 } } } },
-                scales: {
-                    r: {
-                        min: 0,
-                        grid:         { color: '#3a3555' },
-                        angleLines:   { color: '#3a3555' },
-                        pointLabels:  { color: '#b3abeb', font: { size: 12 } },
-                        ticks:        { color: '#888', backdropColor: 'transparent', stepSize: 10 }
-                    }
-                }
-            }
+            options: radarOpts('#9affc0', 'rgba(154, 255, 192, 0.22)')
+        });
+
+        new Chart(document.getElementById('radarAbsences').getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: dayLabels,
+                datasets: [{
+                    label: 'Faltas',
+                    data: absences,
+                    borderColor: '#ff7070',
+                    backgroundColor: 'rgba(255, 112, 112, 0.18)',
+                    pointBackgroundColor: '#ff7070',
+                    borderWidth: 2
+                }]
+            },
+            options: radarOpts('#ff7070', 'rgba(255, 112, 112, 0.18)')
         });
     }
 

@@ -571,8 +571,8 @@ body::before {
         width: 100%;
         max-width: none;
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1.4rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
     }
     .weeks-shell .week-card {
         width: 100%;
@@ -581,8 +581,8 @@ body::before {
         display: block;
         margin: 0;
         box-sizing: border-box;
-        padding: 1.45rem 1.2rem;
-        border-radius: 1.5rem;
+        padding: 1rem 0.8rem;
+        border-radius: 1.2rem;
     }
     .week-header {
         margin-bottom: 1.2rem;
